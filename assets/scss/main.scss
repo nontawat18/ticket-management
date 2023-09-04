@@ -1,0 +1,61 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.v-application {
+    font-family: "Prompt", sans-serif !important;
+}
+
+.image-navbar {
+    background-color: #5d60ef;
+}
+
+.ticket-a {
+    background: -webkit-linear-gradient( #fef9f1, #ffd581, #ffb260);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#fef9f1, #ffd581, #ffb260);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #fef9f1, #ffd581, #ffb260);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#fef9f1, #ffd581, #f5b36d);
+}
+
+.ticket-b {
+    background: -webkit-linear-gradient( #f9fffc, #c4ffdf, #77dca4);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#f9fffc, #c4ffdf, #77dca4);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #f9fffc, #c4ffdf, #77dca4);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#f9fffc, #c4ffdf, #77dca4);
+}
+
+.ticket-c {
+    background: -webkit-linear-gradient( #fff6fe, #fedcfb, #fbacf4);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#fff6fe, #fedcfb, #fbacf4);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #fff6fe, #fedcfb, #fbacf4);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#fff6fe, #fedcfb, #fbacf4);
+}
+
+.ticket-d {
+    background: -webkit-linear-gradient( #edfaff, #d0f2ff, #a8e0f5);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#edfaff, #d0f2ff, #a8e0f5);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #edfaff, #d0f2ff, #a8e0f5);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#edfaff, #d0f2ff, #a8e0f5);
+}
+
+.ticket-e {
+    background: -webkit-linear-gradient( #f8e5f0, #fce1f1, #ffc3e8);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#f8e5f0, #fce1f1, #ffc3e8);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #f8e5f0, #fce1f1, #ffc3e8);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#f8e5f0, #fce1f1, #ffc3e8);
+}
