@@ -1,456 +1,7 @@
 <template>
   <div>
     <Navbar namePage="Buy Ticket" />
-    <v-row>
-      <v-col cols="12" md="6" lg="3">
-        <v-card
-          class=""
-          max-width="374"
-          elevation="1"
-          color="#fafbfd"
-          rounded="xl"
-        >
-          <v-img
-            height="250"
-            :src="require('~/assets/images/letter-a.png')"
-            class="ticket-a"
-          >
-          </v-img>
-
-          <v-card-title>Ticket A</v-card-title>
-
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating
-                :value="getTicketPerDay[0].rating"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-              ></v-rating>
-
-              <div class="grey--text ms-4">{{ getTicketPerDay[0].rating }} ({{ getTicketPerDay[0].countReview }})</div>
-            </v-row>
-          </v-card-text>
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <div class="grey--text">5000฿</div>
-              <v-spacer></v-spacer>
-              <div class="grey--text ms-4">
-                Remaining {{  getTicketPerDay[0].limitPerDay - getTicketAToday }} / {{ getTicketPerDay[0].limitPerDay }}
-              </div>
-            </v-row>
-          </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
-
-          <v-card-actions>
-            <v-row class="text-center">
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketAMinus"
-                  :disabled="disabledMinusA"
-                >
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="4" class="pl-0 pr-0"
-                ><v-text-field
-                  v-model="ticketA"
-                  type="number"
-                  outlined
-                  readonly
-                  dense
-                  hide-details=""
-                ></v-text-field
-              ></v-col>
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketAPlus"
-                  :disabled="disabledPlusA"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-spacer></v-spacer>
-
-            <v-dialog v-model="dialogA" persistent max-width="290">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#5d60ef"
-                  v-bind="attrs"
-                  v-on="on"
-                  elevation="0"
-                  dark
-                  :disabled="buyTicketADisabled"
-                >
-                  <span style="color: #ededed">Buy</span>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-card-title class="text-h5">
-                  Confirm to buy this ticket?
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="red darken-1" text @click="dialogA = false">
-                    Cancle
-                  </v-btn>
-                  <v-btn color="green darken-1" text @click="buyTicketA">
-                    Confirm
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="6" lg="3">
-        <v-card
-          class=""
-          max-width="374"
-          elevation="1"
-          color="#fafbfd"
-          rounded="xl"
-        >
-          <v-img
-            height="250"
-            :src="require('~/assets/images/letter-b.png')"
-            class="ticket-b"
-          >
-          </v-img>
-
-          <v-card-title>Ticket B</v-card-title>
-
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating
-                :value=" getTicketPerDay[1].rating"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-              ></v-rating>
-
-              <div class="grey--text ms-4">{{ getTicketPerDay[1].rating }} ({{ getTicketPerDay[1].countReview }})</div>
-            </v-row>
-          </v-card-text>
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <div class="grey--text">2500฿</div>
-              <v-spacer></v-spacer>
-              <div class="grey--text ms-4">Remaining {{  getTicketPerDay[1].limitPerDay - getTicketBToday }} / {{ getTicketPerDay[1].limitPerDay }}</div>
-            </v-row>
-          </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
-
-          <v-card-actions>
-            <v-row class="text-center">
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketBMinus"
-                  :disabled="disabledMinusB"
-                >
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="4" class="pl-0 pr-0"
-                ><v-text-field
-                  v-model="ticketB"
-                  type="number"
-                  outlined
-                  dense
-                  readonly
-                  hide-details=""
-                ></v-text-field
-              ></v-col>
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketBPlus"
-                  :disabled="disabledPlusB"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-spacer></v-spacer>
-
-            <v-dialog v-model="dialogB" persistent max-width="290">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#5d60ef"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  elevation="0"
-                  :disabled="buyTicketBDisabled"
-                >
-                  <span style="color: #ededed">Buy</span>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-card-title class="text-h5">
-                  Confirm to buy this ticket?
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="red darken-1" text @click="dialogB = false">
-                    Cancle
-                  </v-btn>
-                  <v-btn color="green darken-1" text @click="buyTicketB">
-                    Confirm
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="6" lg="3">
-        <v-card
-          class=""
-          max-width="374"
-          elevation="1"
-          color="#fafbfd"
-          rounded="xl"
-        >
-          <v-img
-            height="250"
-            :src="require('~/assets/images/letter-c.png')"
-            class="ticket-c"
-          >
-          </v-img>
-
-          <v-card-title>Ticket C</v-card-title>
-
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating
-                :value="getTicketPerDay[2].rating"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-              ></v-rating>
-
-              <div class="grey--text ms-4">{{ getTicketPerDay[2].rating }} ({{ getTicketPerDay[2].countReview }})</div>
-            </v-row>
-          </v-card-text>
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <div class="grey--text">1000฿</div>
-              <v-spacer></v-spacer>
-              <div class="grey--text ms-4">Remaining {{ getTicketPerDay[2].limitPerDay  - getTicketCToday }} / {{ getTicketPerDay[2].limitPerDay }}</div>
-            </v-row>
-          </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
-
-          <v-card-actions>
-            <v-row class="text-center">
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketCMinus"
-                  :disabled="disabledMinusC"
-                >
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="4" class="pl-0 pr-0"
-                ><v-text-field
-                  v-model="ticketC"
-                  type="number"
-                  outlined
-                  readonly
-                  dense
-                  hide-details=""
-                ></v-text-field
-              ></v-col>
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketCPlus"
-                  :disabled="disabledPlusC"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-spacer></v-spacer>
-
-            <v-dialog v-model="dialogC" persistent max-width="290">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#5d60ef"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  elevation="0"
-                  :disabled="buyTicketCDisabled"
-
-                >
-                  <span style="color: #ededed">Buy</span>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-card-title class="text-h5">
-                  Confirm to buy this ticket?
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="red darken-1" text @click="dialogC = false">
-                    Cancle
-                  </v-btn>
-                  <v-btn color="green darken-1" text @click="buyTicketC">
-                    Confirm
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="6" lg="3">
-        <v-card
-          class=""
-          max-width="374"
-          elevation="1"
-          color="#fafbfd"
-          rounded="xl"
-        >
-          <template slot="progress">
-            <v-progress-linear
-              color="deep-purple"
-              height="10"
-              indeterminate
-            ></v-progress-linear>
-          </template>
-
-          <v-img
-            height="250"
-            :src="require('~/assets/images/letter-d.png')"
-            class="ticket-d"
-          >
-          </v-img>
-
-          <v-card-title>Ticket D</v-card-title>
-
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating
-                :value=" getTicketPerDay[3].rating "
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-              ></v-rating>
-
-              <div class="grey--text ms-4">{{ getTicketPerDay[3].rating }} ({{ getTicketPerDay[3].countReview }})</div>
-            </v-row>
-          </v-card-text>
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <div class="grey--text">500฿</div>
-              <v-spacer></v-spacer>
-              <div class="grey--text ms-4">Remaining {{  getTicketPerDay[3].limitPerDay  - getTicketDToday }} / {{ getTicketPerDay[3].limitPerDay }}</div>
-            </v-row>
-          </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
-
-          <v-card-actions>
-            <v-row class="text-center">
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketDMinus"
-                  :disabled="disabledMinusD"
-                >
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="4" class="pl-0 pr-0"
-                ><v-text-field
-                  v-model="ticketD"
-                  type="number"
-                  outlined
-                  readonly
-                  dense
-                  hide-details=""
-                ></v-text-field
-              ></v-col>
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketDPlus"
-                  :disabled="disabledPlusD"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-spacer></v-spacer>
-
-            <v-dialog v-model="dialogD" persistent max-width="290">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#5d60ef"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  elevation="0"
-                  :disabled="buyTicketCDisabled"
-                >
-                  <span style="color: #ededed">Buy</span>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-card-title class="text-h5">
-                  Confirm to buy this ticket?
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="red darken-1" text @click="dialogD = false">
-                    Cancle
-                  </v-btn>
-                  <v-btn color="green darken-1" text  @click="buyTicketD">
-                    Confirm
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-    <!-- <v-row>
+    <v-row class="mt-16">
       <v-col
         cols="12"
         md="6"
@@ -489,8 +40,12 @@
             <v-row align="center" class="mx-0">
               <div class="grey--text">{{ item.price }}฿</div>
               <v-spacer></v-spacer>
-              <div class="grey--text ms-4">
-                Remaining {{ item.limitPerDay - getTicketAToday }} /
+              <div class="grey--text ms-4" v-if="getSumAmount == 0">
+                Remaining {{ item.limitPerDay - getSumAmount }} /
+                {{ item.limitPerDay }}
+              </div>
+              <div class="grey--text ms-4" v-else>
+                Remaining {{ item.limitPerDay - getSumAmount[i] }} /
                 {{ item.limitPerDay }}
               </div>
             </v-row>
@@ -499,70 +54,165 @@
           <v-divider class="mx-4"></v-divider>
 
           <v-card-actions>
-            <v-row class="text-center">
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketAMinus"
-                  :disabled="disabledMinusA"
-                >
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="4" class="pl-0 pr-0"
-                ><v-text-field
-                  v-model="ticketA"
-                  type="number"
-                  outlined
-                  readonly
-                  dense
-                  hide-details=""
-                ></v-text-field
-              ></v-col>
-              <v-col cols="4">
-                <v-btn
-                  icon
-                  x-small
-                  fab
-                  @click="ticketAPlus"
-                  :disabled="disabledPlusA"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
             <v-spacer></v-spacer>
             <v-btn
+              v-if="item.limitPerDay - getSumAmount[i] == 0"
               color="#5d60ef"
               elevation="0"
               dark
-              :disabled="buyTicketADisabled"
-              @click="saveData(item)"
+              :disabled="true"
+              @click="saveData(item, i)"
+            >
+              <span style="color: #ededed">Buy</span>
+            </v-btn>
+            <v-btn
+              v-else
+              color="#5d60ef"
+              elevation="0"
+              dark
+              :disabled="false"
+              @click="saveData(item, i)"
             >
               <span style="color: #ededed">Buy</span>
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-dialog v-model="dialogA" persistent max-width="290">
-        <v-card>
-          <v-card-title class="text-h5">
-            Confirm to buy this ticket?
-          </v-card-title>
+      <v-dialog v-model="dialog" width="80%">
+        <v-card class="pa-4" v-if="ticket != null">
+          <v-row class="ma-0" align="end">
+            <v-col cols="12" md="3" lg="3">
+              <v-card rounded="xl">
+                <v-img :src="ticket.picture"> </v-img>
+              </v-card>
+              <v-row class="text-center pa-0 ma-0" align="center">
+                <v-col cols="4">
+                  <v-btn
+                    x-small
+                    elevation="0"
+                    fab
+                    color="#5d60ef"
+                    @click="ticketMinus()"
+                    :disabled="disabledMinus"
+                  >
+                    <v-icon dark color="#ffffff">mdi-minus</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col cols="4" class="pl-0 pr-0"
+                  ><v-text-field
+                    v-model="countBuy"
+                    type="number"
+                    outlined
+                    readonly
+                    dense
+                    hide-details=""
+                  ></v-text-field
+                ></v-col>
+                <v-col cols="4">
+                  <v-btn
+                    x-small
+                    elevation="0"
+                    color="#5d60ef"
+                    fab
+                    @click="ticketPlus()"
+                    :disabled="disabledPlus"
+                  >
+                    <v-icon dark color="#ffffff">mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col cols="12" md="9" lg="9">
+              <h1>{{ ticket.ticket }}</h1>
+              <v-row>
+                <v-col cols="12" md="12" lg="12">
+                  <v-row align="center" class="mx-0">
+                    <v-rating
+                      :value="ticket.rating"
+                      color="amber"
+                      dense
+                      half-increments
+                      readonly
+                      size="14"
+                    ></v-rating>
+
+                    <div class="grey--text ms-4">
+                      {{ ticket.rating }} ({{ ticket.countReview }})
+                    </div>
+                  </v-row>
+                </v-col>
+                <v-col cols="12" md="6" lg="6">
+                  <span
+                    >Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Aut cumque, modi obcaecati soluta corporis fugit unde fuga.
+                    Mollitia reiciendis repellat libero. Porro, earum nemo!
+                    Assumenda laboriosam perferendis ipsa incidunt
+                    expedita.</span
+                  ></v-col
+                >
+
+                <v-col cols="12" md="6" lg="6" class="pl-8">
+                  <v-row align="end">
+                    <v-icon class="pr-2 pb-2"> mdi-cash-multiple </v-icon>
+                    <div>
+                      <small>Price / Ticket</small>
+                      <h2>฿{{ ticket.price }}</h2>
+                    </div>
+                  </v-row>
+                  <v-row align="end">
+                    <v-icon class="pr-2"> mdi-calendar-month-outline </v-icon>
+                    <div>
+                      <small>Buying Date</small><br />
+                      <strong>{{ this.date }}</strong>
+                    </div>
+                  </v-row>
+                  <v-row align="end">
+                    <v-icon class="pr-2"> mdi-ticket </v-icon>
+                    <div>
+                      <small>Remaining</small><br />
+                      <strong
+                        >{{ ticket.limitPerDay - getSumAmount[this.index] }} /
+                        {{ ticket.limitPerDay }}</strong
+                      >
+                    </div>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="red darken-1" text @click="dialogA = false">
+            <v-btn
+              dark
+              color="#fa4646"
+              elevation="0"
+              @click="(countBuy = 1), (dialog = false)"
+            >
               Cancle
             </v-btn>
-            <v-btn color="green darken-1" text @click="buyTicket()">
+            <v-btn
+              elevation="0"
+              dark
+              color="#6ef5a8"
+              @click="buyTicket()"
+              v-if="ticket.minimumBuying <= this.countBuy"
+            >
+              Confirm
+            </v-btn>
+            <v-btn
+              elevation="0"
+              :disabled="true"
+              color="#6ef5a8"
+              @click="buyTicket()"
+              v-else
+            >
               Confirm
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-row> -->
+    </v-row>
   </div>
 </template>
 <script>
@@ -572,163 +222,23 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-      ticketA: 1,
-      ticketB: 2,
-      ticketC: 2,
-      ticketD: 3,
-      // date: format(parseISO(new Date().toISOString()), "dd-MM-yyyy"),
+      countBuy: 1,
+
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
 
-      disabledPlusB: false,
-      disabledMinusB: true,
-      disabledPlusA: false,
-      disabledMinusA: true,
-      disabledPlusC: false,
-      disabledMinusC: true,
-      disabledPlusD: false,
-      disabledMinusD: true,
-      dialogA: false,
-      dialogB: false,
-      dialogC: false,
-      dialogD: false,
-      buyTicketADisabled: false,
-      buyTicketBDisabled: false,
-      buyTicketCDisabled: false,
-      buyTicketDDisabled: false,
+      dialog: false,
+
       ticket: null,
+      disabledPlus: false,
+      disabledMinus: true,
+      getSumAmount: 0,
+      buyTicketDisabled: false,
+      index: null,
     };
   },
   computed: {
-    getTicketA: {
-      get() {
-        if (this.$store.state.tickets) {
-          return this.$store.state.tickets.selectedTicket.ticketA[0];
-        } else {
-          return null;
-        }
-      },
-      set() {},
-    },
-    getTicketAAmount: {
-      get() {
-        if (
-          this.$store.state.tickets.selectedTicket.ticketA == null ||
-          this.$store.state.tickets.selectedTicket.ticketA == 0 ||
-          this.$store.state.tickets.selectedTicket.ticketA == [] ||
-          this.$store.state.tickets.selectedTicket.ticketA == ""
-        ) {
-          return 0;
-        } else {
-          let count = 0;
-          this.$store.state.tickets.selectedTicket.ticketA.forEach((ticket) => {
-            let ticketAmout = parseInt(ticket.ticket.amount);
-            count += ticketAmout;
-            return count;
-          });
-
-          return count;
-        }
-      },
-      set() {},
-    },
-    getTicketAToday: {
-      get() {
-        if (
-          this.$store.state.tickets.selectedTicket.ticketA == null ||
-          this.$store.state.tickets.selectedTicket.ticketA == 0 ||
-          this.$store.state.tickets.selectedTicket.ticketA == [] ||
-          this.$store.state.tickets.selectedTicket.ticketA == ""
-        ) {
-          return 0;
-        } else {
-          let count = 0;
-          this.$store.state.tickets.selectedTicket.ticketA.forEach((ticket) => {
-            if (ticket.ticket.date == this.date) {
-              let ticketAmout = parseInt(ticket.ticket.amount);
-              count += ticketAmout;
-              return count;
-            }
-          });
-
-          return count;
-        }
-      },
-      set() {},
-    },
-    getTicketBToday: {
-      get() {
-        if (
-          this.$store.state.tickets.selectedTicket.ticketB == null ||
-          this.$store.state.tickets.selectedTicket.ticketB == 0 ||
-          this.$store.state.tickets.selectedTicket.ticketB == [] ||
-          this.$store.state.tickets.selectedTicket.ticketB == ""
-        ) {
-          return 0;
-        } else {
-          let count = 0;
-          this.$store.state.tickets.selectedTicket.ticketB.forEach((ticket) => {
-            if (ticket.ticket.date == this.date) {
-              let ticketAmout = parseInt(ticket.ticket.amount);
-              count += ticketAmout;
-              return count;
-            }
-          });
-
-          return count;
-        }
-      },
-      set() {},
-    },
-    getTicketCToday: {
-      get() {
-        if (
-          this.$store.state.tickets.selectedTicket.ticketC == null ||
-          this.$store.state.tickets.selectedTicket.ticketC == 0 ||
-          this.$store.state.tickets.selectedTicket.ticketC == [] ||
-          this.$store.state.tickets.selectedTicket.ticketC == ""
-        ) {
-          return 0;
-        } else {
-          let count = 0;
-          this.$store.state.tickets.selectedTicket.ticketC.forEach((ticket) => {
-            if (ticket.ticket.date == this.date) {
-              let ticketAmout = parseInt(ticket.ticket.amount);
-              count += ticketAmout;
-              return count;
-            }
-          });
-
-          return count;
-        }
-      },
-      set() {},
-    },
-    getTicketDToday: {
-      get() {
-        if (
-          this.$store.state.tickets.selectedTicket.ticketD == null ||
-          this.$store.state.tickets.selectedTicket.ticketD == 0 ||
-          this.$store.state.tickets.selectedTicket.ticketD == [] ||
-          this.$store.state.tickets.selectedTicket.ticketD == ""
-        ) {
-          return 0;
-        } else {
-          let count = 0;
-          this.$store.state.tickets.selectedTicket.ticketD.forEach((ticket) => {
-            if (ticket.ticket.date == this.date) {
-              let ticketAmout = parseInt(ticket.ticket.amount);
-              count += ticketAmout;
-              return count;
-            }
-          });
-
-          return count;
-        }
-      },
-      set() {},
-    },
     getTicketPerDay: {
       get() {
         if (
@@ -747,237 +257,83 @@ export default {
   },
   mounted() {
     this.buyTicketDisable();
+    this.sumAmount();
   },
   methods: {
-    ticketAPlus() {
-      this.ticketA += 1;
-      if (this.ticketA == 1) {
-        this.disabledPlusA = false;
-        this.disabledMinusA = true;
+    ticketPlus() {
+      this.countBuy += 1;
+      if (this.countBuy <= this.ticket.minimumBuying) {
+        this.disabledPlus = false;
+        this.disabledMinus = true;
       } else if (
-        this.ticketA >= 1 &&
-        this.ticketA <
-          this.getTicketPerDay[0].limitPerDay - this.getTicketAToday
+        this.countBuy >= this.ticket.minimumBuying &&
+        this.countBuy < this.ticket.limitPerDay - this.getSumAmount[this.index]
       ) {
-        this.disabledPlusA = false;
-        this.disabledMinusA = false;
+        this.disabledPlus = false;
+        this.disabledMinus = false;
       } else {
-        this.disabledPlusA = true;
-        this.disabledMinusA = false;
+        this.disabledPlus = true;
+        this.disabledMinus = false;
       }
     },
-    ticketAMinus() {
-      this.ticketA -= 1;
-      if (this.ticketA == 1) {
-        this.disabledPlusA = false;
-        this.disabledMinusA = true;
+    ticketMinus() {
+      this.countBuy -= 1;
+      if (this.countBuy == this.ticket.minimumBuying) {
+        this.disabledPlus = false;
+        this.disabledMinus = true;
       } else if (
-        this.ticketA > 1 &&
-        this.ticketA < this.getTicketPerDay[0].limitPerDay
+        this.countBuy > this.ticket.minimumBuying &&
+        this.countBuy < this.ticket.limitPerDay
       ) {
-        this.disabledPlusA = false;
-        this.disabledMinusA = false;
+        this.disabledPlus = false;
+        this.disabledMinus = false;
       } else {
-        this.disabledPlusA = true;
-        this.disabledMinusA = false;
+        this.disabledPlus = true;
+        this.disabledMinus = false;
       }
     },
-    ticketBPlus() {
-      this.ticketB += 1;
-      if (this.ticketB == 2) {
-        this.disabledPlusB = false;
-        this.disabledMinusB = true;
-      } else if (
-        this.ticketB >= 2 &&
-        this.ticketB <
-          this.getTicketPerDay[1].limitPerDay - this.getTicketBToday
-      ) {
-        this.disabledPlusB = false;
-        this.disabledMinusB = false;
-      } else {
-        this.disabledPlusB = true;
-        this.disabledMinusB = false;
-      }
-    },
-    ticketBMinus() {
-      this.ticketB -= 1;
-      if (this.ticketB == 2) {
-        this.disabledPlusB = false;
-        this.disabledMinusB = true;
-      } else if (
-        this.ticketB > 2 &&
-        this.ticketB < this.getTicketPerDay[1].limitPerDay
-      ) {
-        this.disabledPlusAB = false;
-        this.disabledMinusB = false;
-      } else {
-        this.disabledPlusB = true;
-        this.disabledMinusB = false;
-      }
-    },
-
-    ticketCPlus() {
-      this.ticketC += 1;
-      if (this.ticketC == 2) {
-        this.disabledPlusC = false;
-        this.disabledMinusC = true;
-      } else if (
-        this.ticketC > 2 &&
-        this.ticketC <
-          this.getTicketPerDay[2].limitPerDay - this.getTicketCToday
-      ) {
-        this.disabledPlusC = false;
-        this.disabledMinusC = false;
-      } else {
-        this.disabledPlusC = true;
-        this.disabledMinusC = false;
-      }
-    },
-    ticketCMinus() {
-      this.ticketC -= 1;
-      if (this.ticketC == 2) {
-        this.disabledPlusC = false;
-        this.disabledMinusC = true;
-      } else if (
-        this.ticketC > 2 &&
-        this.ticketC < this.getTicketPerDay[2].limitPerDay
-      ) {
-        this.disabledPlusC = false;
-        this.disabledMinusC = false;
-      } else {
-        this.disabledPlusC = true;
-        this.disabledMinusC = false;
-      }
-    },
-    ticketDPlus() {
-      this.ticketD += 1;
-      if (this.ticketD == 3) {
-        this.disabledPlusD = false;
-        this.disabledMinusD = true;
-      } else if (
-        this.ticketD > 3 &&
-        this.ticketD <
-          this.getTicketPerDay[3].limitPerDay - this.getTicketDToday
-      ) {
-        this.disabledPlusD = false;
-        this.disabledMinusD = false;
-      } else {
-        this.disabledPlusD = true;
-        this.disabledMinusD = false;
-      }
-    },
-    ticketDMinus() {
-      this.ticketD -= 1;
-      if (this.ticketD == 3) {
-        this.disabledPlusD = false;
-        this.disabledMinusD = true;
-      } else if (
-        this.ticketD > 3 &&
-        this.ticketD < this.getTicketPerDay[3].limitPerDay
-      ) {
-        this.disabledPlusD = false;
-        this.disabledMinusD = false;
-      } else {
-        this.disabledPlusD = true;
-        this.disabledMinusC = false;
-      }
-    },
-    async buyTicketA() {
-      let data = {
-        id: 1,
-        title: "Ticket A",
-        date: this.date,
-        customer: "Kim Jisoo",
-        amount: this.ticketA,
-        price: 5000,
-      };
-      await this.$store.dispatch(`tickets/buyTicketA`, {
-        ticket: data,
-        amount: this.ticketA,
-      });
-      this.buyTicketDisable();
-      this.dialogA = false;
-    },
-    async buyTicketB() {
-      let data = {
-        id: 2,
-        title: "Ticket B",
-        date: this.date,
-        customer: "Kim Jennie",
-        amount: this.ticketB,
-        price: 2500,
-      };
-      await this.$store.dispatch(`tickets/buyTicketB`, {
-        ticket: data,
-        amount: this.ticketB,
-      });
-      this.buyTicketDisable();
-      this.dialogB = false;
-    },
-    async buyTicketC() {
-      let data = {
-        id: 3,
-        title: "Ticket C",
-        date: this.date,
-        customer: "Lalisa Monobal",
-        amount: this.ticketC,
-        price: 1000,
-      };
-      await this.$store.dispatch(`tickets/buyTicketC`, {
-        ticket: data,
-        amount: this.ticketC,
-      });
-      this.buyTicketDisable();
-      this.dialogC = false;
-    },
-    async buyTicketD() {
-      let data = {
-        id: 4,
-        title: "Ticket D",
-        date: this.date,
-        customer: "Park Bogum",
-        amount: this.ticketD,
-        price: 500,
-      };
-      await this.$store.dispatch(`tickets/buyTicketD`, {
-        ticket: data,
-        amount: this.ticketD,
-      });
-      this.buyTicketDisable();
-      this.dialogD = false;
-    },
-    saveData(item) {
-      this.dialogA = true
-       this.ticket = item;
+    saveData(item, i) {
+      this.ticket = item;
+      this.index = i;
+      this.dialog = true;
     },
     async buyTicket() {
       let data = {
         id: this.ticket.id,
         title: this.ticket.ticket,
         date: this.date,
-        customer: "Kim Jisoo",
-        amount: this.ticketA,
+        customer: "Kim Jennie2",
+        amount: this.countBuy,
         price: 5000,
       };
       await this.$store.dispatch(`tickets/buyTicket`, {
         ticket: data,
-        amount: this.ticketA,
+        amount: this.countBuy,
       });
+      console.log(data);
       this.buyTicketDisable();
-      this.dialogA = false;
+      this.sumAmount();
+
+      this.dialog = false;
+      await this.$router.push("/");
     },
     buyTicketDisable() {
-      if (this.getTicketAToday >= this.getTicketPerDay[0].limitPerDay) {
-        this.buyTicketADisabled = true;
-      }
-      if (this.getTicketBToday >= this.getTicketPerDay[1].limitPerDay) {
-        this.buyTicketBDisabled = true;
-      }
-      if (this.getTicketCToday >= this.getTicketPerDay[2].limitPerDay) {
-        this.buyTicketCDisabled = true;
-      }
-      if (this.getTicketCToday >= this.getTicketPerDay[3].limitPerDay) {
-        this.buyTicketDDisabled = true;
+      this.getTicketPerDay.forEach((ticket, i) => {
+        if (this.getSumAmount[i] >= ticket.limitPerDay) {
+          this.buyTicketDisabled = true;
+        }
+      });
+    },
+    sumAmount() {
+      if (
+        this.$store.state.tickets.sumAmount == null ||
+        this.$store.state.tickets.sumAmount == 0 ||
+        this.$store.state.tickets.sumAmount == [] ||
+        this.$store.state.tickets.sumAmount == ""
+      ) {
+        this.getSumAmount = 0;
+      } else {
+        this.getSumAmount = this.$store.state.tickets.sumAmount;
       }
     },
   },

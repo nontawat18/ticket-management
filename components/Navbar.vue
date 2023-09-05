@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-app-bar app elevation="0" color="#fafbfd">
+  <div  >
+    <v-app-bar app elevation="0" color="#fafbfd" height="auto">
       <h1 style="font-weight: bold; color: #3c4166">{{ namePage }}</h1>
       <v-spacer></v-spacer>
 

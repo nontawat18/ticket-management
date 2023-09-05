@@ -63,12 +63,8 @@ export const state = () => ({
 
             }
         ]
-    }
-
-
-
-
-
+    },
+    sumAmount: null
 
 });
 
@@ -201,24 +197,29 @@ export const mutations = {
 
 
         let ticketInCart = state.selectedTicket.ticket.find(item => {
-            return item.ticket.customer === ticket.customer;
+            return item.customer === ticket.customer && item.date === ticket.date && item.id === ticket.id;
         });
         let ticketInDate = state.selectedTicket.ticket.find(item => {
-            console.log(item.ticket.date, ticket.date)
-            return item.ticket.date === ticket.date;
+            console.log(item.date, ticket.date)
+            return item.date === ticket.date;
         });
         let ticketInID = state.selectedTicket.ticket.find(item => {
-            return item.ticket.id === ticket.id;
+            return item.id === ticket.id;
         });
-        if (ticketInCart && ticketInDate && ticketInID) {
-            ticketInID.ticket.amount += amount;
+        if (ticketInCart) {
+            ticketInCart.amount += amount;
             return;
         }
 
-        state.selectedTicket.ticket.push({
+        state.selectedTicket.ticket.push(
             ticket
-        });
+        );
     },
+    sumAmount(state, { sumAmount }) {
+        state.sumAmount = sumAmount;
+
+
+    }
 
 };
 
@@ -242,6 +243,9 @@ export const actions = {
     },
     buyTicket({ commit }, { ticket, amount }) {
         commit("buyTicket", { ticket, amount });
+    },
+    sumAmount({ commit }, { sumAmount }) {
+        commit("sumAmount", { sumAmount });
     },
 
 };

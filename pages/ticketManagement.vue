@@ -2,14 +2,12 @@
   <div>
     <Navbar namePage="Ticket Management" />
 
-    <v-col cols="12" sm="12" md="12" lg="12">
+    <v-col cols="12" sm="12" md="12" lg="12" class="mt-16">
       <v-card class="pa-4" rounded="xl" elevation="0" color="#fafbfd">
-        <!-- <div class="pb-2">
-          <h2 style="font-weight: bold; color: #3c4166">Ticket Order</h2>
-        </div> -->
+
         <v-col class="text-right pa-0">
           <v-dialog v-model="dialog" max-width="500px">
-            <!-- <template v-slot:activator="{ on, attrs }">
+            <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="#5d60ef"
                 dark
@@ -20,7 +18,7 @@
               >
                 New Item
               </v-btn>
-            </template> -->
+            </template>
             <v-card>
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
@@ -39,18 +37,21 @@
                       <v-text-field
                         v-model="editedItem.limitPerDay"
                         label="Amount limit per day"
+                        type="number"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="editedItem.price"
                         label="Price (฿)"
+                        type="number"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="editedItem.minimumBuying"
                         label="Minimum Buying"
+                        type="number"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -59,10 +60,17 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red darken-1" text @click="dialog = false">
+                <v-btn
+                  dark
+                  color="#fa4646"
+                  @click="dialog = false,editedIndex = -1"
+                  elevation="0"
+                >
                   Cancel
                 </v-btn>
-                <v-btn color="green darken-1" text @click="save"> Save </v-btn>
+                <v-btn dark color="#6ef5a8" @click="save" elevation="0">
+                  Save
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -83,7 +91,6 @@
             <v-icon small class="mr-2" @click="editItem(item)">
               mdi-pencil
             </v-icon>
-            <!-- <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon> -->
           </template>
         </v-data-table>
       </v-card>
